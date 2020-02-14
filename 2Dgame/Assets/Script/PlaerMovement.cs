@@ -20,20 +20,29 @@ public class PlaerMovement : MonoBehaviour
 
     float jumpTime;                       //跳跃开始时间
 
+    [Header("攻击参数")]
+    public float attackTimeDuration = 0.08f;      //攻击时间
+
+    float AttackTime;                     //攻击开始时间
+
     [Header("状态参数")]                  //准备修改为状态机
     public bool isCrouch;                 //下蹲状态
     public bool isOnGround;               //地面状态
     public bool isJump;                   //跳跃状态
+    public bool isAttack;                 //攻击状态
 
     [Header("环境检测")]
     public LayerMask groundLayer;         //地面layer
     public float footOffset = 0.4f;       //脚下与人物位置的偏移
+    public float footOffsety = 1f;        //垂直偏移
     public float groundDistance = 0.35f;  //射线检测的距离
+    public float colloffSet = 0.6f;        //用于检测碰撞体y轴  不同的角色 位置中心不一样 需要调整碰撞体 缩减后的值
 
     //动作按键是否按下
-    bool jumpPressed; //单次跳跃
-    bool jumpHeld;    //长按跳跃
-    bool crouchHeld;  //长按下蹲
+    bool jumpPressed;  //单次跳跃
+    bool jumpHeld;     //长按跳跃
+    bool crouchHeld;   //长按下蹲
+    bool attackPressed;//单次攻击 J键
 
     //碰撞体参数
     Vector2 collStandoff;     //站立时的碰撞体偏移
@@ -50,7 +59,7 @@ public class PlaerMovement : MonoBehaviour
         collStandoff = coll.offset;
         collStandsize = coll.size;
         collCrouchsize = new Vector2(coll.size.x, coll.size.y / 2);
-        collCrouchoff = new Vector2(coll.offset.x, coll.offset.y / 2);
+        collCrouchoff = new Vector2(coll.offset.x, coll.offset.y / 2 - colloffSet);
     }
 
     void Update()
@@ -59,6 +68,8 @@ public class PlaerMovement : MonoBehaviour
             jumpPressed = true;
         if (Input.GetButton("Jump") && !isJump)
             jumpHeld = true;
+        if (Input.GetKeyDown(KeyCode.J) && !isAttack)
+            attackPressed = true;
         crouchHeld = Input.GetButton("Crouch");
     }
 
@@ -68,6 +79,7 @@ public class PlaerMovement : MonoBehaviour
         GroundMovement();
         //跳跃
         MidMovement();
+        Attack();
     }
     //射线检测
     RaycastHit2D Raycast(Vector2 offset, Vector2 rayDiraction, float length, LayerMask layer)
@@ -83,8 +95,8 @@ public class PlaerMovement : MonoBehaviour
     //环境判断
     void PhysicsCheck()
     {
-        RaycastHit2D leftCheck = Raycast(new Vector2(-footOffset,0.05f),Vector2.down,groundDistance, groundLayer);
-        RaycastHit2D rightCheck = Raycast(new Vector2(footOffset+0.17f, 0.05f), Vector2.down, groundDistance, groundLayer);
+        RaycastHit2D leftCheck = Raycast(new Vector2(-footOffset, footOffsety), Vector2.down, groundDistance, groundLayer);
+        RaycastHit2D rightCheck = Raycast(new Vector2(footOffset + 0.17f, footOffsety), Vector2.down, groundDistance, groundLayer);
         if (leftCheck || rightCheck)
             isOnGround = true;
         else
@@ -160,6 +172,18 @@ public class PlaerMovement : MonoBehaviour
                 isJump = false;
             jumpPressed = false;//在fixupdate里进行 bool值改变
         }
+    }
+    //角色攻击
+    void Attack()
+    {
+        if (attackPressed && isOnGround && xVelocity == 0)
+        {
+            isAttack = true;
+            AttackTime = Time.time + attackTimeDuration;
+        }
+        attackPressed = false;
+        if (AttackTime <= Time.time)
+            isAttack = false;
     }
 
 }
