@@ -5,48 +5,47 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class ButtonResponse : MonoBehaviour
 {
-    public GameObject Btn;
-    public GameObject Option;
-    public GameObject loadScreen;
+    public GameObject StartBtn;  //开始界面
+    public GameObject OptionBtn; //选项界面
+    public GameObject loadScreen;//加载界面
 
 
-    public Slider slider;
-    public Text sliderpro;
-    // Start is called before the first frame update
+    public Slider slider;       //加载进度条
+    public Text sliderpro;      //加载文本
     void Start()
     {
         
     }
-
+    //鼠标进入按钮
     public void MouseEnter()
     {
         AudioManager.BtnenterSource();
     }
-
+    //选项按钮被点击时
     public void BtnOption()
     {
         AudioManager.BtnclickSource();
-        Btn.SetActive(false);
-        Option.SetActive(true);
+        StartBtn.SetActive(false);
+        OptionBtn.SetActive(true);
     }
-
+    //返回按钮被点击时
     public void BtnBack()
     {
         AudioManager.BtnclickSource();
-        Btn.SetActive(true);
-        Option.SetActive(false);
+        StartBtn.SetActive(true);
+        OptionBtn.SetActive(false);
     }
-
+    //退出按钮被点击时
     public void BtnQuit()
     {
         AudioManager.BtnclickSource();
         Application.Quit();
     }
-
+    //开始按钮被点击时
     public void BtnStart()
     {
         AudioManager.BtnclickSource();
-        StartCoroutine(Loadlevel());
+        StartCoroutine(Loadlevel());  //协程方式异步加载
     }
 
     IEnumerator Loadlevel()
@@ -66,6 +65,7 @@ public class ButtonResponse : MonoBehaviour
             {
                 slider.value = 1;
                 sliderpro.text = 100 + "%";
+                AudioManager.StartLevelAudio();
             }
             yield return null;
         }
