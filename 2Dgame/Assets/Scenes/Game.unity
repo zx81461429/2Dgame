@@ -1415,7 +1415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 352288081d3432745ae6550bb22241d8, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -2244,14 +2244,18 @@ MonoBehaviour:
   jumpHoldForce: 1.9
   jumpHoldDuration: 0.1
   crouchJumpBoost: 2.5
+  attackTimeDuration: 0.08
   isCrouch: 0
   isOnGround: 0
   isJump: 0
+  isAttack: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
   footOffset: 0.4
+  footOffsety: 0.2
   groundDistance: 0.2
+  colloffSet: 0.6
   xVelocity: 0
 --- !u!114 &1326521437
 MonoBehaviour:
