@@ -14,8 +14,9 @@ public class ButtonResponse : MonoBehaviour
     public Text sliderpro;      //加载文本
     void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
+    //------------------------------------------
     //鼠标进入按钮
     public void MouseEnter()
     {
@@ -47,7 +48,6 @@ public class ButtonResponse : MonoBehaviour
         AudioManager.BtnclickSource();
         StartCoroutine(Loadlevel());  //协程方式异步加载
     }
-
     IEnumerator Loadlevel()
     {
         loadScreen.SetActive(true);

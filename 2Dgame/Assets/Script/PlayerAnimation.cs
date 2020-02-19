@@ -21,7 +21,6 @@ public class PlayerAnimation : MonoBehaviour
         anim.SetBool("isCrouching", movement.isCrouch);
         anim.SetFloat("verticalVelocity", rb.velocity.y);
         anim.SetBool("isAttacking", movement.isAttack);
-        Debug.Log(movement.isAttack);
     }
     //走路音效播放
     public void StepAudio()

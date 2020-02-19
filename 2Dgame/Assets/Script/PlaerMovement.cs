@@ -161,7 +161,7 @@ public class PlaerMovement : MonoBehaviour
 
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);//添加力  第二个参数表示突然产生的力
 
-            AudioManager.PlayJumpAudio();
+            //AudioManager.PlayJumpAudio();
         }
         //长按跳跃增加高度
         else if (isJump)
