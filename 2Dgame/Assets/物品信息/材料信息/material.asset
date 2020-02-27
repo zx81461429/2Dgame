@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752192766be4b9545afa1c6361f977fa, type: 3}
   m_Name: material
   m_EditorClassIdentifier: 
-  id: 0
-  num: 30
+  id: 101
+  num: 31
   Name: 
   img: {fileID: 21300088, guid: 0a15f2ef17680f34eba054a12eb1a223, type: 3}
   type: 2

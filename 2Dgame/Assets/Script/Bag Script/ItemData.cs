@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 [CreateAssetMenu(fileName = "new menu", menuName = "Menu/creat itemData")]
+[Serializable]
 public class ItemData : ScriptableObject
 {
     public enum Type {
@@ -11,7 +13,6 @@ public class ItemData : ScriptableObject
         potion,
         material,
     }
-
     public enum Equip
     {
         wuqi,
@@ -20,7 +21,7 @@ public class ItemData : ScriptableObject
         xiezi,
         shipin,
     }
-
+    [SerializeField]
     public int id;//物品id
     public int num;//持有数量
     public string Name;//物品名称

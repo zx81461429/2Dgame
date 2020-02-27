@@ -42,9 +42,13 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
             {
                 //3.更新背包链表 (换完位置可能导致鼠标点击的itemID改变 所以要先更新背包链接)
                 ItemData temp = InventoryManager._instance.myBag.itemlist[eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponentInParent<Griditem>().SlotID];
-                Debug.Log(eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponentInParent<Griditem>().SlotID + "   " + currentID);
                 InventoryManager._instance.myBag.itemlist[eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponentInParent<Griditem>().SlotID] = InventoryManager._instance.myBag.itemlist[currentID];
                 InventoryManager._instance.myBag.itemlist[currentID] = temp;
+                //4.更新两个格子的属性
+                InventoryManager._instance.slots[currentID].GetComponent<Griditem>().item = InventoryManager._instance.myBag.itemlist[currentID];
+                InventoryManager._instance.slots[eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponentInParent<Griditem>().SlotID].GetComponent<Griditem>().item = InventoryManager._instance.myBag.itemlist[eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponentInParent<Griditem>().SlotID];
+                InventoryManager._instance.slots[currentID].GetComponent<Griditem>().type = InventoryManager._instance.myBag.itemlist[currentID].type;
+                InventoryManager._instance.slots[eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponentInParent<Griditem>().SlotID].GetComponent<Griditem>().type = InventoryManager._instance.myBag.itemlist[eventData.pointerCurrentRaycast.gameObject.transform.parent.GetComponentInParent<Griditem>().SlotID].type;
                 //1.设置当前item 父物体与位置
                 transform.SetParent(eventData.pointerCurrentRaycast.gameObject.transform.parent.parent);
                 transform.position = eventData.pointerCurrentRaycast.gameObject.transform.position;
@@ -72,7 +76,9 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
                 }
             }
             //进入装备栏 并且 物品类型都是装备  并且是同一种部位
-            else if (eventData.pointerCurrentRaycast.gameObject.name == "equip_slot" && (eventData.pointerCurrentRaycast.gameObject.GetComponent<equip>().type == OldParent.GetComponent<Griditem>().type) && (eventData.pointerCurrentRaycast.gameObject.GetComponent<equip>().equiptype == OldParent.GetComponent<Griditem>().item.EquipType))
+            else if (eventData.pointerCurrentRaycast.gameObject.name == "equip_slot" && 
+                    (eventData.pointerCurrentRaycast.gameObject.GetComponent<equip>().type == OldParent.GetComponent<Griditem>().type) && 
+                    (eventData.pointerCurrentRaycast.gameObject.GetComponent<equip>().equiptype == OldParent.GetComponent<Griditem>().item.EquipType))
             {
                 //装备栏对应位置生成图片
                 GameObject pic = Instantiate(this.transform.GetChild(0).gameObject);
@@ -81,6 +87,7 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
                 pic.transform.localScale = eventData.pointerCurrentRaycast.gameObject.transform.localScale;
                 //记录旧的背包里 物品数据item
                 eventData.pointerCurrentRaycast.gameObject.GetComponent<equip>().item = OldParent.GetComponent<Griditem>().item;
+                Debug.Log(eventData.pointerCurrentRaycast.gameObject.GetComponent<equip>().item);
                 //增加装备栏链表中的装备
                 EquipGenerate._instance.SetEquip(OldParent.GetComponent<Griditem>().item, EquipGenerate._instance.myEquipBag);
                 //删除背包链表中的装备
@@ -119,8 +126,10 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
         //不在UI上
         else 
         {
-            transform.SetParent(OldParent);
-            transform.position = OldParent.position;
+            Destroy(transform.gameObject);
+            InventoryManager._instance.myBag.itemlist[OldParent.GetComponentInParent<Griditem>().SlotID] = null;
+            //transform.SetParent(OldParent);
+            //transform.position = OldParent.position;
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
@@ -145,7 +154,7 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
         if (transform.parent != null)
         {
             //当被点击的时候 判断物品 类型 如果是 装备 则执行下一步
-            if (transform.parent.GetComponent<Griditem>().item.type == ItemData.Type.equip)
+            if (transform.parent.GetComponent<Griditem>().type == ItemData.Type.equip)
             {
                 //找到字典中对应的类型位置
                 int index = 0;
@@ -160,7 +169,6 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
                 //判断装备栏链表 对应位置是否为空
                 if (EquipGenerate._instance.myEquipBag.itemlist[index] != null)
                 {
-                    Debug.Log("不为空");
                     //不为空
                     //装备栏链表 和 背包链表 对应位置替换
                     ItemData temp = EquipGenerate._instance.myEquipBag.itemlist[index];

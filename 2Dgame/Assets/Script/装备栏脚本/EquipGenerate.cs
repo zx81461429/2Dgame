@@ -55,19 +55,19 @@ public class EquipGenerate : MonoBehaviour
                 break;
             case ItemData.Equip.toukui:
                 myequitBag.itemlist[1] = item;
-                toukui.GetComponent<equip>().item = _instance.myEquipBag.itemlist[0];
+                toukui.GetComponent<equip>().item = _instance.myEquipBag.itemlist[1];
                 break;
             case ItemData.Equip.xiongjia:
                 myequitBag.itemlist[2] = item;
-                xiongjia.GetComponent<equip>().item = _instance.myEquipBag.itemlist[0];
+                xiongjia.GetComponent<equip>().item = _instance.myEquipBag.itemlist[2];
                 break;
             case ItemData.Equip.xiezi:
                 myequitBag.itemlist[3] = item;
-                xiezi.GetComponent<equip>().item = _instance.myEquipBag.itemlist[0];
+                xiezi.GetComponent<equip>().item = _instance.myEquipBag.itemlist[3];
                 break;
             case ItemData.Equip.shipin:
                 myequitBag.itemlist[4] = item;
-                shipin.GetComponent<equip>().item = _instance.myEquipBag.itemlist[0];
+                shipin.GetComponent<equip>().item = _instance.myEquipBag.itemlist[4];
                 break;
         }
     }
@@ -78,7 +78,7 @@ public class EquipGenerate : MonoBehaviour
         {
             if (_instance.myEquipBag.itemlist[i] == null)
                 continue;
-            if (item.EquipType == _instance.myEquipBag.itemlist[i].EquipType)
+            else if (item.EquipType == _instance.myEquipBag.itemlist[i].EquipType)
             {
                 _instance.myEquipBag.itemlist[i] = null;
                 break;

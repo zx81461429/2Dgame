@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752192766be4b9545afa1c6361f977fa, type: 3}
   m_Name: xiongjia
   m_EditorClassIdentifier: 
-  id: 5001
+  id: 30001
   num: 0
   Name: 
   img: {fileID: 21300028, guid: 03dd1ef6fb163214c9e1ac0242dab3ba, type: 3}

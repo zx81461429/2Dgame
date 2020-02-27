@@ -33,8 +33,12 @@ public class equipimageOnDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, 
             if (eventData.pointerCurrentRaycast.gameObject.name == "Slot(Clone)")
             {
                 InventoryManager._instance.myBag.itemlist[eventData.pointerCurrentRaycast.gameObject.GetComponent<Griditem>().SlotID] = transform.GetComponent<equip>().item;
+                //先找到在装备栏的第几个被点击了
+                int index = EquipGenerate._instance.getIndex(transform.GetComponent<equip>().item);
+                Debug.Log(index);
+                //让背包中的物品消失
+                EquipGenerate._instance.myEquipBag.itemlist[index] = null;
                 InventoryManager._instance.RefrashBag();
-                EquipGenerate._instance.ReduceEquip(transform.GetComponent<equip>().item);
                 Destroy(transform.GetChild(0).gameObject);
             }
             //替换装备 首先与物品类型都是装备 并且还是同一部位

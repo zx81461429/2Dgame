@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752192766be4b9545afa1c6361f977fa, type: 3}
   m_Name: xiezi
   m_EditorClassIdentifier: 
-  id: 4001
+  id: 40001
   num: 0
   Name: 
   img: {fileID: 21300030, guid: 03dd1ef6fb163214c9e1ac0242dab3ba, type: 3}

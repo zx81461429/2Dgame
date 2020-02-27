@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752192766be4b9545afa1c6361f977fa, type: 3}
   m_Name: equip
   m_EditorClassIdentifier: 
-  id: 1001
-  num: 14
-  Name: 
+  id: 10001
+  num: 27
+  Name: wuqi
   img: {fileID: 21300000, guid: 03dd1ef6fb163214c9e1ac0242dab3ba, type: 3}
   type: 0
   EquipType: 0
