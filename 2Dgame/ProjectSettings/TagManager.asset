@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - wuqi
+  - Enemy
   layers:
   - Default
   - TransparentFX
