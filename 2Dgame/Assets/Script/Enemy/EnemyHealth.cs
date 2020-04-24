@@ -12,7 +12,7 @@ public class EnemyHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EnemyRenderer = GetComponent<SpriteRenderer>();
+        EnemyRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -21,8 +21,8 @@ public class EnemyHealth : MonoBehaviour
         if (ChangeRedtime <= Time.time)
             EnemyRenderer.color = Color.white;
 
-        if (EnemyBlood == 0)
-            Destroy(this.gameObject, 0.2f);
+        //if (EnemyBlood == 0)
+        //    Destroy(this.gameObject, 0.2f);
     }
 
     public void GetHurt(int HurtNum)
@@ -30,7 +30,6 @@ public class EnemyHealth : MonoBehaviour
         ChangeRedtime = Time.time + Redtime;
         EnemyBlood -= HurtNum;
         EnemyRenderer.color = Color.red;
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
